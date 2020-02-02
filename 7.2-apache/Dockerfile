@@ -51,6 +51,8 @@ RUN set -eux; \
 
 	 COPY drupal-* /usr/local/etc/php/conf.d/
 	 COPY ./msmtprc /etc/msmtprc
+	 COPY server-name.conf /etc/apache2/conf-available/
+	 RUN a2enconf server-name
 
 	 EXPOSE 443
 	 WORKDIR /var/www/html/
