@@ -43,7 +43,7 @@ RUN set -eux; \
 #		 -subj "/C=US/ST=NC/L=Vien/O=Security/OU=Development/CN=localhost"
 
 
-	 COPY drupal-* /usr/local/etc/php/conf.d/
+	 COPY *.ini /usr/local/etc/php/conf.d/
 	 COPY ./msmtprc /etc/msmtprc
 
 	 EXPOSE 443
