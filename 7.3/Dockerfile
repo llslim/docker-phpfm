@@ -1,10 +1,7 @@
-FROM php:7.2-apache
+FROM php:7.3-fpm-stretch
 MAINTAINER Kevin Williams (@llslim) <info@llslim.com>
 
 RUN set -eux; \
-	if command -v a2enmod; then \
-	  a2enmod rewrite ssl; \
-	fi; \
 	buildDeps=" \
 	   libjpeg-dev \
 	   libpng-dev \
@@ -25,11 +22,8 @@ RUN set -eux; \
 	   gd --with-jpeg-dir=/usr --with-png-dir=/usr; \
 	 docker-php-ext-install -j "$(nproc)" gd mbstring opcache pdo pdo_mysql pdo_pgsql mysqli zip; \
 	  # install xdebug extension
-	 touch /tmp/xdebug.ini; \
-	 chmod 666 /tmp/xdebug.ini; \
-	 pecl channel-update pecl.php.net; \
-	 pecl config-set php_ini /usr/local/etc/php/conf.d/xdebug.ini; \
-	 pecl install xdebug; \
+	  pecl install xdebug; \
+		docker-php-ext-enable xdebug; \
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	 apt-mark auto '.*' > /dev/null; \
 	 apt-mark manual $savedAptMark; \
@@ -51,8 +45,6 @@ RUN set -eux; \
 
 	 COPY drupal-* /usr/local/etc/php/conf.d/
 	 COPY ./msmtprc /etc/msmtprc
-	 COPY server-name.conf /etc/apache2/conf-available/
-	 RUN a2enconf server-name
 
 	 EXPOSE 443
 	 WORKDIR /var/www/html/
