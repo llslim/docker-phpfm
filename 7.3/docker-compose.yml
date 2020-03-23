@@ -3,4 +3,4 @@ version: '3'
 services:
    web:
      build: .
-     image: llslim/docker-phpfpm:local
+     image: llslim/phpfpm:local
