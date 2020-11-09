@@ -97,36 +97,43 @@
 ;   Default Value: On
 ;   Development Value: On
 ;   Production Value: Off
+;display_errors=on
 
 ; display_startup_errors
 ;   Default Value: Off
 ;   Development Value: On
 ;   Production Value: Off
+;display_startup_errors=on
 
 ; error_reporting
 ;   Default Value: E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
 ;   Development Value: E_ALL
 ;   Production Value: E_ALL & ~E_DEPRECATED & ~E_STRICT
+;error_reporting=E_ALL
 
 ; html_errors
 ;   Default Value: On
 ;   Development Value: On
 ;   Production value: On
+;html_errors=on
 
 ; log_errors
 ;   Default Value: Off
 ;   Development Value: On
 ;   Production Value: On
+;log_errors=on
 
 ; max_input_time
 ;   Default Value: -1 (Unlimited)
 ;   Development Value: 60 (60 seconds)
 ;   Production Value: 60 (60 seconds)
+;max_input_time=60
 
 ; output_buffering
 ;   Default Value: Off
 ;   Development Value: 4096
 ;   Production Value: 4096
+;output_buffering=4096
 
 ; register_argc_argv
 ;   Default Value: On
@@ -514,7 +521,7 @@ report_memleaks = On
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/track-errors
-track_errors = On
+;track_errors = On
 
 ; Turn off normal error reporting and emit XML-RPC error XML
 ; http://php.net/xmlrpc-errors
@@ -567,7 +574,7 @@ html_errors = On
 ; Example:
 ;error_log = php_errors.log
 ; Log errors to syslog (Event Log on Windows).
-;error_log = syslog
+error_log = /dev/stderr 
 
 ;windows.show_crt_warning
 ; Default value: 0
@@ -921,7 +928,7 @@ cli_server.color = On
 [Date]
 ; Defines the default timezone used by the date functions
 ; http://php.net/date.timezone
-;date.timezone =
+date.timezone = "America/New_York"
 
 ; http://php.net/date.default-latitude
 ;date.default_latitude = 31.7667
