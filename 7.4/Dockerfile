@@ -1,15 +1,6 @@
 FROM php:7.4-fpm-buster
 MAINTAINER Kevin Williams (@llslim) <info@llslim.com>
 
-# copy default php.ini into image
-COPY php.ini /usr/local/etc/php/
-
-# copy the php config files for modules into image
-COPY ./php-conf.d/*.ini /usr/local/etc/php/conf.d/
-
-# copy the php fpm files into image 
-COPY ./php-fpm.d/* /usr/local/etc/php-fpm.d/
-
 RUN set -eux; \
 \
 	if command -v a2enmod; then \
@@ -36,10 +27,6 @@ RUN set -eux; \
 	 docker-php-ext-configure \
 	   gd --with-freetype --with-jpeg=/usr; \
 	 docker-php-ext-install -j "$(nproc)" gd opcache pdo pdo_mysql pdo_pgsql mysqli zip; \
-	# install xdebug extension
-	pear config-set php_ini /usr/local/etc/php/php.ini; \
-	pecl install xdebug; \
- 	docker-php-ext-enable xdebug; \
 
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	 apt-mark auto '.*' > /dev/null; \
@@ -53,7 +40,20 @@ RUN set -eux; \
 	   | xargs -rt apt-mark manual; \
 	 \
 	 apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-	  rm -rf /var/lib/apt/lists/*
+	  rm -rf /var/lib/apt/lists/*; \
+	# install xdebug extension
+	pear config-set php_ini /usr/local/etc/php/php.ini; \
+	pecl install xdebug; \
+ 	docker-php-ext-enable xdebug
+
+# copy default php.ini into image
+COPY php.ini /usr/local/etc/php/
+
+# copy the php config files for modules into image
+COPY ./php-conf.d/*.ini /usr/local/etc/php/conf.d/
+
+# copy the php fpm files into image 
+COPY ./php-fpm.d/* /usr/local/etc/php-fpm.d/
 
 #	 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 #	  -keyout /etc/ssl/private/ssl-cert-llslim.key -out /etc/ssl/certs/ssl-cert-llslim.pem \
