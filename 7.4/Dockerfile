@@ -34,7 +34,7 @@ RUN set -eux; \
 	  apt-get install -y --no-install-recommends $buildDeps; \
 	 # build php extensions with development dependencies, and install them
 	 docker-php-ext-configure \
-	   gd --with-freetype --with-jpeg; \
+	   gd --with-freetype --with-jpeg=/usr; \
 	 docker-php-ext-install -j "$(nproc)" gd opcache pdo pdo_mysql pdo_pgsql mysqli zip; \
 	# install xdebug extension
 	pear config-set php_ini /usr/local/etc/php/php.ini; \
