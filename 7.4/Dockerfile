@@ -1,5 +1,5 @@
-FROM php:7.4-fpm-buster
-MAINTAINER Kevin Williams (@llslim) <info@llslim.com>
+FROM php:7.4-fpm
+LABEL maintainer="Kevin Williams (@llslim) <info@llslim.com>"
 
 RUN set -eux; \
 \
@@ -27,7 +27,6 @@ RUN set -eux; \
 	 docker-php-ext-configure \
 	   gd --with-freetype --with-jpeg=/usr; \
 	 docker-php-ext-install -j "$(nproc)" gd opcache pdo pdo_mysql pdo_pgsql mysqli zip; \
-
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	 apt-mark auto '.*' > /dev/null; \
 	 apt-mark manual $savedAptMark; \
