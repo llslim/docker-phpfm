@@ -3,4 +3,4 @@ version: '3'
 services:
    web:
      build: .
-     image: llslim/phpfpm:local-7.4
+     image: llslim/phpfpm:7.4
